@@ -105,4 +105,4 @@ jobs:
             kill $STREAMLIT_PID || true
 
             python3 src/train.py
-            streamlit run src/app.py --server.port 8501
+            nohup streamlit run src/app.py --server.port 8501 > streamlit.log 2>&1 &
