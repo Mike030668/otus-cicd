@@ -9,7 +9,7 @@ env:
   SERVER_HOST: ${{ secrets.SERVER_HOST }}
   SERVER_USER: ${{ secrets.SERVER_USER }}
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  PROJECT_NAME: 'otus-cicd'
+  PROJECT_NAME: 'otus-cicd-project'
   PYTHON_VERSION: '3.8'
 
 jobs:
