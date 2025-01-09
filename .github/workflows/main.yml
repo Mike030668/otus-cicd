@@ -36,6 +36,7 @@ jobs:
         run: pylint src
 
   test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,6 +55,7 @@ jobs:
         run: pytest --cov=src tests
 
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -85,6 +87,7 @@ jobs:
             pip install -r requirements/requirements.txt
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
