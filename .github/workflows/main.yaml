@@ -102,5 +102,25 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements/requirements.txt
 
-  # deploy:
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Run deploy script
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            # Setup
+            cd /home/${{ env.SERVER_USER }}/otus-cicd
+            source .bashrc
+            source .venv/bin/activate
+
+            # Run the deploy script
+            chmod +x scripts/entrypoint.sh
+            bash scripts/entrypoint.sh
