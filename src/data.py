@@ -32,6 +32,7 @@ def load_data() -> Tuple[np.ndarray, np.ndarray, List[str], List[str]]:
         - Target names: List of strings describing each target class
     """
     iris = load_iris()
+
     return iris.data, iris.target, iris.feature_names, iris.target_names
 
 
