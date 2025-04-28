@@ -6,8 +6,7 @@ on:
       - main
 
 env:
-  # PATH_FOR_LINT: "src tests config"
-  VAR: "test"
+  PATH_FOR_LINT: "src tests config"
 
 jobs:
   lint:
