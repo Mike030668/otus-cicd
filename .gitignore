@@ -9,3 +9,5 @@ test.yml
 .coverage
 *.joblib
 buf
+*.zip
+*.log
