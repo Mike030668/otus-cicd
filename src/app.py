@@ -14,7 +14,7 @@ def main():
     Main function of the app.
     """
 
-    st.title("Iris Flower Prediction App")
+    st.title("Iris Flower Prediction Super App")
 
     # Load the trained model and other saved data
     model = load_model()

@@ -12,58 +12,58 @@ env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 jobs:
-  # lint:
-  #   runs-on: ubuntu-latest
+  lint:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.8'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-  #     - name: Install dependencies
-  #       run: |
-  #         source .bashrc
-  #         pip install --upgrade pip
-  #         pip install -r requirements/requirements.txt
-  #         pip install -r requirements/requirements-lint.txt
+      - name: Install dependencies
+        run: |
+          source .bashrc
+          pip install --upgrade pip
+          pip install -r requirements/requirements.txt
+          pip install -r requirements/requirements-lint.txt
 
-  #     - name: Run isort
-  #       run: isort ${PATH_FOR_LINT} --check --profile black
+      - name: Run isort
+        run: isort ${PATH_FOR_LINT} --check --profile black
 
-  #     - name: Run black
-  #       run: black ${PATH_FOR_LINT} --check
+      - name: Run black
+        run: black ${PATH_FOR_LINT} --check
 
-  #     - name: Run ruff
-  #       run: ruff check ${PATH_FOR_LINT}
+      - name: Run ruff
+        run: ruff check ${PATH_FOR_LINT}
 
-  # test:
-  #   needs: lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.8'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-  #     - name: Install dependencies
-  #       run: |
-  #         source .bashrc
-  #         pip install --upgrade pip
-  #         pip install -r requirements/requirements.txt
-  #         pip install -r requirements/requirements-test.txt
+      - name: Install dependencies
+        run: |
+          source .bashrc
+          pip install --upgrade pip
+          pip install -r requirements/requirements.txt
+          pip install -r requirements/requirements-test.txt
   
-  #     - name: Run pytest
-  #       run: pytest --cov=src tests
+      - name: Run pytest
+        run: pytest --cov=src tests
   
   build:
-    # needs: test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
