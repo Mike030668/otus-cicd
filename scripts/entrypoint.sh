@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export STREMLIT_PID=$(lsof -ti:8501) || true
 kill $STREMLIT_PID || true
 

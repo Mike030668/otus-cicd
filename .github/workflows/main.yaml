@@ -112,5 +112,6 @@ jobs:
           script: |
             cd ${{ env.DEPLOY_PATH }}
             source .bashrc
+            source .venv/bin/activate
             chmod +x scripts/entrypoint.sh
             bash scripts/entrypoint.sh
