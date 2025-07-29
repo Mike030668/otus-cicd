@@ -7,6 +7,10 @@ on:
 
 env:
   PATH_FOR_LINT: "src config tests"
+  SERVER_USER: ${{ secrets.SERVER_USER }}
+  SERVER_HOST: ${{ secrets.SERVER_HOST }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  DEPLOY_PATH: "/home/${{ secrets.SERVER_USER }}/otus-cicd"
 
 jobs:
   lint:
@@ -58,3 +62,40 @@ jobs:
         run: |
           source .bashrc
           pytest --cov=src tests
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy files to VM
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: ".bashrc,requirements,src,config,models,data,scripts"
+          target: ${{ env.DEPLOY_PATH }}
+
+      - name: Install dependencies on VM
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ env.DEPLOY_PATH }}
+            source .bashrc
+            ls -la
+
+            if [[ -d .venv ]]; then
+              echo "Virtual environment already exists. Skipping creation."
+            else
+              python3 -m venv .venv
+            fi
+
+            source .venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements/requirements.txt
+            
