@@ -1,6 +1,11 @@
 """
 Main script to train and save the model.
 """
+import sys
+from pathlib import Path
+
+# Добавляем корень проекта в sys.path
+sys.path.append(str(Path(__file__).parent.parent))
 
 from loguru import logger
 

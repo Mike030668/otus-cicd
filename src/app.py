@@ -2,6 +2,12 @@
 Main application
 """
 
+import sys
+from pathlib import Path
+
+# Добавляем корень проекта в sys.path
+sys.path.append(str(Path(__file__).parent.parent))
+
 import pandas as pd
 import streamlit as st
 
