@@ -19,22 +19,23 @@ jobs:
   # Linting and formatting https://github.com/actions/checkout
   lint:
     runs-on: ubuntu-latest
+    # On push to main branch
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      # Install dependencies
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-
+      # Install dependencies
       - name: Install dependencies
         run: |
           source .bashrc
           pip install --upgrade pip
           pip install -r requirements/requirements-lint.txt
           pip install -r requirements/requirements.txt
-
+      # Linting
       - name: Run isort
         run: isort ${PATH_FOR_LINT} --check --profile black
 
