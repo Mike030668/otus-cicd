@@ -1,10 +1,12 @@
 name: CI/CD Pipeline
 
+# On push to main branch
 on:
   push:
     branches:
       - main
 
+# 
 env:
   PATH_FOR_LINT: "src config tests"
   SERVER_USER: ${{ secrets.SERVER_USER }}
@@ -12,7 +14,9 @@ env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   DEPLOY_PATH: "/home/${{ secrets.SERVER_USER }}/otus-cicd"
 
+# jobs:
 jobs:
+  # Linting and formatting https://github.com/actions/checkout
   lint:
     runs-on: ubuntu-latest
     steps:

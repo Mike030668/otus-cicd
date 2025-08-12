@@ -6,6 +6,12 @@ Description:
     training and testing sets.
 """
 
+import sys
+from pathlib import Path
+
+# Добавляем корень проекта в sys.path
+sys.path.append(str(Path(__file__).parent.parent))
+
 import os
 from typing import List, Tuple
 
