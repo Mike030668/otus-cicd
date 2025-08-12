@@ -68,14 +68,15 @@ jobs:
         run: |
           source .bashrc
           pytest --cov=src tests
-  # Build
+
+  # Build https://github.com/appleboy/scp-action
   build:
     runs-on: ubuntu-latest
     needs: [lint, test]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      # Install dependencies
       - name: Copy files to VM
         uses: appleboy/scp-action@v1
         with:
@@ -84,7 +85,7 @@ jobs:
           key: ${{ env.SSH_PRIVATE_KEY }}
           source: ".bashrc,requirements,src,config,models,data,scripts"
           target: ${{ env.DEPLOY_PATH }}
-
+      # Install dependencies
       - name: Install dependencies on VM
         uses: appleboy/ssh-action@v1
         with:
@@ -104,7 +105,7 @@ jobs:
 
             source .venv/bin/activate
             pip install --upgrade pip
-            pip install -r requirements/requirements.txt
+            pip install -r requirements/requirements.txt          
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
